@@ -18,6 +18,17 @@
                     <!-- notes header-->
                     <div class="note-header">
                         <h1>{{title}}</h1>
+
+                        <div class="icons-controls">
+                            <!--search-->
+                            <p>{{search}}</p>
+                            <search
+                                :value="search"
+                                placeholder="Find your note"
+                                @searchNote="val => search = val"
+                            />
+                        </div>
+
                         <div class="note-icons">
                             <span
                                     class="note-icon"
@@ -38,7 +49,7 @@
 
                     <!--note-list-->
                     <notes
-                        :notesList="notes"
+                        :notesList="notesFilter(notes)"
                         @removeNoteItem="removeNote"
                         :grid="grid"
                     />
@@ -52,6 +63,7 @@
     import message from './components/Message.vue';
     import newNote from './components/NewNote.vue';
     import notes from './components/Notes.vue';
+    import search from './components/Search.vue';
     import iconList from './components/IconList.vue';
     import iconRow from './components/IconRow.vue';
 
@@ -61,7 +73,8 @@
             newNote,
             notes,
             iconList,
-            iconRow
+            iconRow,
+            search
         },
 
         data: function () {
@@ -69,6 +82,7 @@
                 title: 'Notes App',
                 errorMessage: null,
                 grid: true,
+                search: '',
                 notes: [
                     {
                         title: 'First note',
@@ -101,8 +115,19 @@
             },
             removeNote: function(index){
                 this.notes.splice(index, 1)
+            },
+            notesFilter(notes){
+                if(!this.search){
+                    return notes;
+                };
+                notes = notes.filter((note) => {
+                    if(note.title.toLowerCase().indexOf(this.search.toLowerCase()) !== -1){
+                        return note
+                    }
+                });
+                return notes
             }
-        }
+        },
     }
 </script>
 

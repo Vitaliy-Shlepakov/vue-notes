@@ -44,6 +44,11 @@
 
     .new-note
         text-align: center
+        margin-bottom: 60px
+        margin-left: -20px
+        margin-right: -20px
+        padding: 20px
+        border: 2px dashed #ddd
 
     .add-btn
         margin: 20px 0 0
