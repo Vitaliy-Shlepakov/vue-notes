@@ -4,7 +4,7 @@
         <input v-model="note.title" type="text">
         <label>Description</label>
         <textarea v-model="note.description"></textarea>
-        <button class="btn btnPrimary" @click="addNote">New note</button>
+        <button class="btn btnPrimary add-btn" @click="addNote">New note</button>
     </div>
 </template>
 
@@ -41,6 +41,15 @@
 </script>
 
 <style lang="sass">
-    button
+
+    .new-note
         text-align: center
+
+    .add-btn
+        margin: 20px 0 0
+        display: inline-block
+        transition: background-color .2s
+
+        &:hover
+            background-color: darken(#494ce8, 10%)!important
 </style>

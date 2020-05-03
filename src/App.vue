@@ -3,8 +3,7 @@
         <div class="wrapper-content">
             <section>
                 <div class="container">
-                    <h1>{{title}}</h1>
-
+                    <!-- message-->
                     <message
                         v-if="errorMessage"
                         :message="errorMessage"
@@ -16,10 +15,32 @@
                         @throwNewMessage="throwNewMessage"
                     />
 
+                    <!-- notes header-->
+                    <div class="note-header">
+                        <h1>{{title}}</h1>
+                        <div class="note-icons">
+                            <span
+                                    class="note-icon"
+                                    :class="{active: grid}"
+                                    @click="grid = true"
+                            >
+                                <iconRow/>
+                            </span>
+                            <span
+                                    class="note-icon"
+                                    :class="{active: !grid}"
+                                    @click="grid = false"
+                            >
+                                <iconList/>
+                            </span>
+                        </div>
+                    </div>
+
                     <!--note-list-->
                     <notes
                         :notesList="notes"
                         @removeNoteItem="removeNote"
+                        :grid="grid"
                     />
                 </div>
             </section>
@@ -31,19 +52,23 @@
     import message from './components/Message.vue';
     import newNote from './components/NewNote.vue';
     import notes from './components/Notes.vue';
+    import iconList from './components/IconList.vue';
+    import iconRow from './components/IconRow.vue';
 
     export default {
         components: {
             message,
             newNote,
-            notes
+            notes,
+            iconList,
+            iconRow
         },
 
         data: function () {
             return {
-                title: 'Notes',
+                title: 'Notes App',
                 errorMessage: null,
-
+                grid: true,
                 notes: [
                     {
                         title: 'First note',
@@ -80,4 +105,39 @@
         }
     }
 </script>
+
+<style lang="sass">
+
+    .note-header
+        display: flex
+        justify-content: space-between
+
+    .note-icon
+        display: inline-block
+        width: 24px
+        height: 24px
+
+        svg
+            max-width: 100%
+            height: 100%
+            fill: #ccc
+            stroke: #ccc
+            transition: all .2s
+
+        &:first-child
+            margin-right: 10px
+
+        &:hover
+            cursor: pointer
+
+            svg
+                fill: #222
+                stroke: #222
+
+        &.active
+            svg
+                fill: #222
+                stroke: #222
+
+</style>
 
