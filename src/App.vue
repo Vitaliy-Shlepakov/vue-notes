@@ -1,28 +1,83 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="wrapper">
+        <div class="wrapper-content">
+            <section>
+                <div class="container">
+                    <h1>{{title}}</h1>
+
+                    <message
+                        v-if="errorMessage"
+                        :message="errorMessage"
+                    />
+
+                    <!-- new note-->
+                    <newNote
+                        @addNote="addNewNote"
+                        @throwNewMessage="throwNewMessage"
+                    />
+
+                    <!--note-list-->
+                    <notes
+                        :notesList="notes"
+                        @removeNoteItem="removeNote"
+                    />
+                </div>
+            </section>
+        </div>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import message from './components/Message.vue';
+    import newNote from './components/NewNote.vue';
+    import notes from './components/Notes.vue';
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        components: {
+            message,
+            newNote,
+            notes
+        },
+
+        data: function () {
+            return {
+                title: 'Notes',
+                errorMessage: null,
+
+                notes: [
+                    {
+                        title: 'First note',
+                        description: 'Description for first note',
+                        date: new Date(Date.now()).toLocaleString()
+                    },
+                    {
+                        title: 'Second note',
+                        description: 'Description for second note',
+                        date: new Date(Date.now() + 1000).toLocaleString()
+                    },
+                    {
+                        title: 'Third note',
+                        description: 'Description for third note',
+                        date: new Date(Date.now() + 2000).toLocaleString()
+                    },
+                ]
+            }
+        },
+
+        methods: {
+            addNewNote: function(newNote){
+                this.notes.push({
+                    ...newNote,
+                    date: new Date(Date.now()).toLocaleString()
+                });
+            },
+            throwNewMessage: function(message){
+                this.errorMessage = message;
+            },
+            removeNote: function(index){
+                this.notes.splice(index, 1)
+            }
+        }
+    }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

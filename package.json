@@ -1,5 +1,5 @@
 {
-  "name": "vue-cli",
+  "name": "vue-notes",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "node-sass": "^4.14.0",
+    "sass-loader": "^8.0.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {
